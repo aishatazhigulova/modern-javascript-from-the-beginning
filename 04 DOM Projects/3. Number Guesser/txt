@@ -1,0 +1,57 @@
+//Select
+let game = document.querySelector('#game')
+let minNum = document.querySelector('.min-num')
+let maxNum = document.querySelector('.max-num')
+
+let guessNum = document.querySelector('#guess-num')
+let btn = document.querySelector('#submit-btn')
+let message = document.querySelector('.message')
+
+let secretNum = Math.floor(Math.random() * 10);
+minNum.textContent = 1
+maxNum.textContent = 10
+let maxTries = 3
+let count = 0
+
+btn.addEventListener('click', guessing)
+
+
+function guessing(e) {
+    e.preventDefault()
+    guessNum.value = ''
+
+    if (secretNum === parseInt(guessNum.value)) {
+        setMessage(`Your ${guessNum.value} is correct`, 'green')
+        setBorder('green')
+    } else {
+        setMessage(`Your ${guessNum.value} is not correct, you have ${maxTries} left`, 'red')
+        setBorder('red')
+        tryGuess()
+    }
+}
+
+
+//Set message
+function setMessage(msg, color) {
+    message.style.color = color;
+    message.textContent = msg;
+}
+
+//Set Border
+function setBorder(color) {
+    guessNum.style.border = `1px solid ${color}`
+} 
+
+//Try Guess
+function tryGuess() {
+    maxTries--
+    count += 1
+
+    if (maxTries < 0) {
+        btn.value = 'Please try again'
+    }
+
+    if (count === 5) {
+        window.location.reload()
+    }
+}
